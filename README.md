@@ -10,10 +10,15 @@
     * Room price
     * Room size
     * Other service: Pet allowance, breakfast
+* Login and register for booking, cancel rooms.
+* Booking rooms, cancel booking rooms ( only authentic account).
     
 ### Tech Stacks
 * Language: Javascript, Html/Css
 * ReactJS
+* NodeJS
+* MongoDB Cloud
+* GraphQL
 
 ### Run the app
 * Visit in your browser: (https://beachresort-react-hooks.netlify.app/rooms)
