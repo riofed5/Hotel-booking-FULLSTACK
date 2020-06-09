@@ -37,5 +37,7 @@
     }
 }
 ```
-* Launch: `npm start`
-* Navigate to `frontend folder` then launch: `npm start`
+* Launch server : `npm start`
+* Launch client: 
+   * Navigate to `frontend folder`
+   * Launch: `npm start`
