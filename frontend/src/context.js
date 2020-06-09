@@ -4,6 +4,8 @@ const RoomContext = React.createContext();
 
 class RoomProvider extends Component {
 
+    
+    
     state = {
         rooms: [],
         sortedRooms: [],
@@ -18,15 +20,17 @@ class RoomProvider extends Component {
         maxSize: 0,
         breakfast: false,
         pets: false,
-        token: null,
+        token: sessionStorage.getItem('token'),
         userId: null,
     }
 
     login = (token, userId, tokenExpiration) => {
+        sessionStorage.setItem('token', token);
         this.setState({token: token, userId: userId});
     };
 
     logout = () => {
+        sessionStorage.removeItem('token');
         this.setState({token: null, userId: null});
     };
 
@@ -36,25 +40,30 @@ class RoomProvider extends Component {
             query: `
                 query{
                     events{
-                    _id
-                    name
-                    slug
-                    type
-                    price
-                    size
-                    capacity
-                    pets
-                    breakfast
-                    featured
-                    description
-                    extras
-                    images{
-                        fields{
-                        file{
-                            url
+                        _id
+                        name
+                        slug
+                        type
+                        price
+                        size
+                        capacity
+                        pets
+                        breakfast
+                        featured
+                        description
+                        extras
+                        images{
+                            fields{
+                                file{
+                                    url
+                                }
+                            }
                         }
+                        bookedEvents{
+                            _id
+                            startDay
+                            endDay
                         }
-                    }
                     }
                 }
               `
@@ -90,14 +99,19 @@ class RoomProvider extends Component {
 
     componentDidMount() {
         this.getData();
-
     }
 
     formatItem(items) {
         let tempItem = items.map(item => {
             let _id = item._id;
             let images = item.images.map(image => image.fields.file.url);
-            const room = {...item, images, _id};
+            // console.log("Dcm ", new Date(rooms[0].bookedEvents[0].startDay));
+            let bookedEvents = item.bookedEvents.map(booking => {
+                const startDay = new Date(booking.startDay);
+                const endDay = new Date(booking.endDay);
+                return {...booking, startDay, endDay}
+            })
+            const room = {...item, images, _id, bookedEvents};
             return room;
         });
         return tempItem;

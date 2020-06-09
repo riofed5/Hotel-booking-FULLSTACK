@@ -1,3 +1,5 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +12,9 @@
   --mainBlack: #222;
   --mainGrey: #ececec;
   --darkGrey: #cfcfcf;
+  --darkerGrey: #6a6d6a;
+  --babyBlue: #63a9eb;
+  --babyRed: #d62828;
   --mainTransition: all 0.3s linear;
   --mainSpacing: 3px;
   --lightShadow: 2px 5px 3px 0px rgba(0, 0, 0, 0.5);
@@ -26,7 +31,6 @@ body {
 h1 {
   font-size: 3em;
   line-height: 1;
-  margin-bottom: 0.5em;
 }
 h2 {
   font-size: 2em;
@@ -134,7 +138,7 @@ h6 {
 }
 
 .show-nav {
-  height: 100px;
+  height: 200px;
 }
 @media screen and (min-width: 768px) {
   .nav-btn {
@@ -512,11 +516,153 @@ h6 {
 }
 /* end of rooms fitler*/
 /* Auth */
-  
-.auth-form {
-  width: 25rem;
-  max-width: 80%;
-  margin: 5rem auto;
+
+.auth-form{
+  width: 30%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-60%,-60%);
+  color: var(--primaryColor);
+}
+
+.auth-form h1{
+  border-bottom: solid 4px var(--primaryColor);
+  font-size: 50px;
+  float: left;
+  color: var(--mainBlack);
+  padding: 13px 0px;
+  font-size: 30px;
+}
+
+.textbox{
+  width: 100%;
+  overflow: hidden;
+  padding: 6px 0px;
+  margin: 6px 0px;
+  float: left;
+  border-bottom: solid 1px var(--primaryColor);
+}
+.textbox i{
+  width: 26px;
+  float: left;
+  text-align: center;
+}
+.textbox input{
+  background: none;
+  outline: none;
+  border: none;
+  color: var(--mainBlack);
+  font-size: 20px;
+}
+
+.form-actions .submit {
+  float: left;
+  width: 100%;
+  background: var(--primaryColor);
+  outline: none;
+  color: var(--mainWhite);
+  border: solid 2px var(--primaryColor);
+  font-size: 20px;
+  transition: transform 0.5s ease-in;
+  margin-bottom: 5px;
+}
+
+.form-actions .mode {
+  float: left;
+  width: 100%;
+  background: none;
+  outline: none;
+  color: var(--mainBlack);
+  font-size: 20px;
+  border: none;
+  transition: transform 0.5s ease-in;
+  margin-bottom: 5px;
 }
 
 /* end of auth */
+
+/* Modal Booking */
+
+.modal{
+  width: 80vw;
+  margin: 0 auto 3rem auto;
+}
+.modal-header{
+  justify-content: center;
+  text-align: center;
+  color: var(--babyBlue);
+  font-size: 35px;
+  letter-spacing: var(--mainSpacing);
+}
+
+.modal-actions{
+  width: 50%;
+  margin: auto auto;
+}
+
+.booking-details .bookingform-control{
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+}
+
+.booking-details .bookingform-control label{
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.booking-details .bookingform-control input{
+  border: none;
+  border-bottom: solid 0.5px var(--primaryColor);
+  outline: none;
+  line-height: 50px;
+  font-size: 20px;
+  /* color: var(--darkerGrey); */
+}
+
+.btn-confirm, .btn-cancel{
+  float: left;
+  width: 100%;
+  height: 5vh;
+  background: var(--primaryColor);
+  outline: none;
+  color: var(--mainWhite);
+  border: none;
+  font-size: 20px;
+  transition: transform 0.5s ease-in;
+  margin-bottom: 5px;
+  letter-spacing: var(--mainSpacing);
+  padding: 20px auto;
+}
+.btn-cancel{
+  background: var(--babyRed);
+
+}
+
+/* End of Modal booking */
+
+/* Selection Day */
+
+.picking-day{
+  width: 100%;
+  padding: 10px 0;
+}
+
+.picking-day button{
+  outline: none;
+  border: none;
+  border-bottom: solid 0.5px var(--primaryColor);
+  font-size: 1.1rem;
+  background: none;
+}
+
+.Selectable{
+  width: 100%;
+  padding: 0 0;
+}
+
+.Selectable :focus{
+  outline: none;
+}
+/* End of Selection Day */

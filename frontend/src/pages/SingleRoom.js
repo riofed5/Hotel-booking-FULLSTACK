@@ -4,7 +4,7 @@ import Banner from '../components/Banner';
 import {Link} from 'react-router-dom';
 import {RoomContext} from '../context';
 import StyledHero from '../components/StyledHero';
-import Modal from '../components/Modal';
+import FormBooking from '../components/FormBooking';
 import DaySelection from '../components/DaySelection';
 
 
@@ -39,13 +39,14 @@ export default class SingleRoom extends Component {
     };
 
     modalConfirmHandler = () => {
-        console.log("time start", this.state.startingDate);
-        console.log("time end", this.state.endingDate);
         const token = this.context.token;
         const postId = this.context.getRoom(this.state.slug)._id;
-        console.log(postId,`.....token is :  ${token}`);
+        console.log(postId, `.....token is :  ${token}`);
 
-        if( this.state.startingDate  && this.state.endingDate && postId){
+        if (this.state.startingDate
+            && this.state.endingDate
+            && postId && this.nameElRef.current.value !== ''
+            && this.phoneElRef.current.value !== '') {
             const requestBody = {
                 query: `
                     mutation{
@@ -67,7 +68,7 @@ export default class SingleRoom extends Component {
                     }
                   `,
             };
-    
+
             fetch('http://localhost:8000/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
@@ -76,20 +77,22 @@ export default class SingleRoom extends Component {
                     Authorization: 'Bearer ' + token
                 }
             })
-            .then(res => {
-                if (res.status !== 200 && res.status !== 201) {
-                    throw new Error('Failed!');
-                }
-                return res.json();
-            })
-            .then(async resData => {
-                console.log(await resData);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        }else{
-            console.log("Missing start day or end day or id of post!");
+                .then(res => {
+                    if (res.status !== 200 && res.status !== 201) {
+                        throw new Error('Failed!');
+                    }
+                    return res.json();
+                })
+                .then(resData => {
+                    console.log(resData);
+                    this.setState({isModaled: false});
+                })
+                .catch(err => {
+                    this.setState({isModaled: false});
+                    console.log(err);
+                });
+        } else {
+            alert("something wrong!");
         }
     }
 
@@ -107,9 +110,28 @@ export default class SingleRoom extends Component {
                 </div>)
         }
 
-        const {_id,name, description, capacity, price, size, extras, breakfast, pets, images} = room;
-
+        const {name, description, capacity, price, size, extras, breakfast, pets, images, bookedEvents} = room;
         const [mainImg, ...defaultImg] = images;
+
+        let daysInvalid = [];
+        let disabledDays = [...bookedEvents];
+        disabledDays = disabledDays.map(booked => {
+            const today = new Date();
+            if (booked.endDay > today) {
+                daysInvalid.push(booked.startDay);
+                daysInvalid.push(booked.endDay);
+
+                let startDay = new Date(booked.startDay.getTime());
+                startDay.setDate(startDay.getDate() - 1);
+
+                let endDay = new Date(booked.endDay.getTime());
+                endDay.setDate(endDay.getDate() + 1);
+                return {
+                    after: startDay,
+                    before: endDay,
+                }
+            }
+        })
 
         return (
             <>
@@ -171,30 +193,30 @@ export default class SingleRoom extends Component {
                         </Link>
                     }
                 </div>
-                {!this.state.isModaled && (
-                    <Modal
-                        title="Add Event"
+                {this.state.isModaled && (
+                    <FormBooking
+                        title="Booking Section"
                         canCancel
                         canConfirm
                         onCancel={this.modalCancelHandler}
                         onConfirm={this.modalConfirmHandler}
                         confirmText="Confirm"
                     >
-                        <form>
-                            <div className="form-control">
+                        <form className="booking-details">
+                            <div className="bookingform-control">
                                 <label htmlFor="name">Fullname</label>
-                                <input type="text" id="name" ref={this.nameElRef} />
+                                <input type="text" placeholder="Michael Jordan" id="name" ref={this.nameElRef} />
                             </div>
-                            <div className="form-control">
+                            <div className="bookingform-control">
                                 <label htmlFor="phone">Phone Number</label>
-                                <input type="number" id="phone" ref={this.phoneElRef} />
+                                <input type="text" placeholder="(+358) 123456789" id="phone" ref={this.phoneElRef} />
                             </div>
-                            <div className="form-control">
+                            <div className="bookingform-control">
                                 <label htmlFor="date">Date Of Booking</label>
-                                <DaySelection handleDaySelection={this.handleDaySelection} />
+                                <DaySelection handleDaySelection={this.handleDaySelection} disabledDays={disabledDays} daysInvalid={daysInvalid} />
                             </div>
                         </form>
-                    </Modal>
+                    </FormBooking>
                 )}
             </>
         )

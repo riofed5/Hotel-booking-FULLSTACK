@@ -32,14 +32,14 @@ module.exports = {
             description: args.eventInput.description,
             extras: args.eventInput.extras,
             images: args.eventInput.images,
-            creator: "5eda8b5886c8a2c447accf73"
+            creator: "5edf8a5c675f5cb7aee026cd"
         })
         try {
             console.log("pending Event: ", pendingEvent.images[0]);
             let tempResult;
             const result = await pendingEvent.save()
             tempResult = transformEvent(result);
-            const creator = await User.findById("5eda8b5886c8a2c447accf73")
+            const creator = await User.findById("5edf8a5c675f5cb7aee026cd")
             if (!creator) {
                 throw new Error("User not found")
             }

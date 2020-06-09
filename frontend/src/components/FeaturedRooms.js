@@ -12,7 +12,7 @@ export default class FeaturedRooms extends Component {
         let {loading, featuredRooms: rooms}= this.context;
         rooms = rooms.map(room=>{
             return (
-                <Room key={room.id} room={room}/>
+                <Room key={room._id} room={room}/>
             )
         }) ;  
 

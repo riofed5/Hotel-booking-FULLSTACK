@@ -10,9 +10,12 @@ export default class DaySelection extends React.Component {
         this.handleResetClick = this.handleResetClick.bind(this);
         this.state = this.getInitialState();
         this.disabledDays = [
-            new Date(2020, 5, 5),
-            new Date(2020, 5, 12),
+            ...this.props.disabledDays,
+            {
+                before: new Date()
+            }
         ];
+        this.daysInvalid = this.props.daysInvalid;
     }
 
     getInitialState() {
@@ -33,10 +36,10 @@ export default class DaySelection extends React.Component {
             return;
         }
         const range = DateUtils.addDayToRange(day, this.state);
-        
+
         let validDay;
         if (range.to && range.from) {
-            validDay = this.checkDayValid(this.disabledDays, range.from, range.to);
+            validDay = this.checkDayValid(this.daysInvalid, range.from, range.to);
             if (validDay) {
                 const result = new Date(validDay.getTime());
                 result.setDate(result.getDate() - 1);
@@ -53,12 +56,12 @@ export default class DaySelection extends React.Component {
     }
 
     render() {
-
         const {from, to} = this.state;
         const modifiers = {start: from, end: to};
+
         return (
             <div className="RangeExample">
-                <p>
+                <p className="picking-day">
                     {!from && !to && 'Please select the first day.'}
                     {from && !to && 'Please select the last day.'}
                     {from &&
@@ -67,8 +70,8 @@ export default class DaySelection extends React.Component {
                 ${to.toLocaleDateString()}`}{' '}
                     {from && to && (
                         <button className="link" onClick={this.handleResetClick}>
-                            Reset
-            </button>
+                            (Click here to re-choose the day)
+                        </button>
                     )}
                 </p>
                 <DayPicker
@@ -81,22 +84,23 @@ export default class DaySelection extends React.Component {
                 />
                 <Helmet>
                     <style>{`
-  .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-    background-color: #f0f8ff !important;
-    color: #4a90e2;
-  }
-  .Selectable .DayPicker-Day {
-    border-radius: 0 !important;
-  }
-  .Selectable .DayPicker-Day--start {
-    border-top-left-radius: 50% !important;
-    border-bottom-left-radius: 50% !important;
-  }
-  .Selectable .DayPicker-Day--end {
-    border-top-right-radius: 50% !important;
-    border-bottom-right-radius: 50% !important;
-  }
-`}</style>
+                        .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+                            background-color: #f0f8ff !important;
+                            color: #4a90e2;
+                        }
+                        .Selectable .DayPicker-Day {
+                            border-radius: 0 !important;
+                        }
+                        .Selectable .DayPicker-Day--start {
+                            border-top-left-radius: 50% !important;
+                            border-bottom-left-radius: 50% !important;
+                        }
+                        .Selectable .DayPicker-Day--end {
+                            border-top-right-radius: 50% !important;
+                            border-bottom-right-radius: 50% !important;
+                        }
+                        `}
+                    </style>
                 </Helmet>
             </div>
         );

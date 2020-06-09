@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {RoomContext} from '../context';
 
 class AuthPage extends Component {
@@ -16,7 +16,7 @@ class AuthPage extends Component {
 
   switchModeHandler = () => {
     this.setState(prevState => {
-      return { isLogin: !prevState.isLogin };
+      return {isLogin: !prevState.isLogin};
     });
   };
 
@@ -87,18 +87,19 @@ class AuthPage extends Component {
 
     return (
       <form className="auth-form" onSubmit={this.submitHandler}>
-        <div className="form-control">
-          <label htmlFor="email">E-Mail</label>
-          <input type="email" id="email" ref={this.emailEl} />
+        <h1>{this.state.isLogin ? 'Login' : 'Register'}</h1>
+        <div className="textbox">
+          <i className="fa fa-user" aria-hidden="true"></i>
+          <input type="email" placeholder="Email" id="email" ref={this.emailEl} />
         </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" ref={this.passwordEl} />
+        <div className="textbox">
+          <i className="fa fa-lock" aria-hidden="true"></i>
+          <input type="password" placeholder="Password" id="password" ref={this.passwordEl} />
         </div>
         <div className="form-actions">
-          <button type="submit">Submit</button>
-          <button type="button" onClick={this.switchModeHandler}>
-            Switch to {this.state.isLogin ? 'Signup' : 'Login'}
+          <button className="submit" type="submit">{this.state.isLogin ? 'Login' : 'Register'}</button>
+          <button className="mode" type="button" onClick={this.switchModeHandler}>
+            {this.state.isLogin ? 'You do NOT have account?' : 'Switch To Login'}
           </button>
         </div>
       </form>
