@@ -4,7 +4,7 @@ const User = require('../../models/user');
 const {transformBooking, transformEvent, loaders} = require('./merge');
 
 module.exports = {
-    bookings: async (req) => {
+    bookings: async (args, req) => {
         if (!req.isAuth) {
             throw new Error('Unauthenticated!')
         }
@@ -22,25 +22,27 @@ module.exports = {
             throw new Error('Unauthenticated!')
         }
         try {
-            const fetchedEvent = await Event.findOne({_id: args.eventInfo._id})
-            
+            console.log(req.isAuth);
+            const fetchedEvent =await Event.findOne({ _id: args.eventInfo._id });
+
             const booking = new Booking({
                 user: req.userId,
                 event: fetchedEvent,
                 startDay: args.eventInfo.startDay,
                 endDay: args.eventInfo.endDay,
             })
-            const result = await booking.save();
+            const rawBooking = await booking.save();
+            const result = transformBooking(rawBooking);
+            /**
+             * User saves this bookingEvent
+             */
 
-            // const creator = await User.findById(req.userId);
-            const creator = await loaders.userLoader.load(req.userId.toString())
+            const creator = await User.findById(req.userId);
 
             if (!creator) {
                 throw new Error("User not found")
             }
-            /**
-             * User saves this bookingEvent
-             */
+            
             creator.bookingEvents.push(booking);
             await creator.save();
 
@@ -48,26 +50,28 @@ module.exports = {
              * Event saves this bookedEvent
              */
 
-            await fetchedEvent.bookedEvents.push(booking);
+            fetchedEvent.bookedEvents.push(booking);
             await fetchedEvent.save();
 
-            return transformBooking(result)
+            return result
         } catch (err) {
             throw err
         }
     },
     cancelBooking: async (args, req) => {
-        // if (!req.isAuth) {
-        //     throw new Error('Unauthenticated!')
-        // }
+        if (!req.isAuth) {
+            throw new Error('Unauthenticated!')
+        }
         try {
-            const selectedBooking = await Booking.findById(args.bookingId);
-            const selectedEvent = await Event.findOne({_id: selectedBooking.event})
+            const selectedBooking = await Booking.findById(args.bookingId).populate('event');
 
-            const event = transformEvent(selectedBooking.event)
+            const selectedEvent = selectedBooking.event;
+
+            const event = transformEvent(selectedEvent);
+
             await Booking.deleteOne({_id: args.bookingId})
 
-            const creator = await User.findById("5edf8bd6660ba0b7f065e1e5");
+            const creator = await User.findById(req.userId);
             if (!creator) {
                 throw new Error("User not found")
             }

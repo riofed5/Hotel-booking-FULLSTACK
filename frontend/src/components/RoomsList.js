@@ -19,7 +19,6 @@ const RoomsList = ({rooms}) => {
                 })}
 
             </div>
-            
         </section>
     )
 }

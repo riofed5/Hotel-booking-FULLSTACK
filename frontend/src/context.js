@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 const RoomContext = React.createContext();
 
 class RoomProvider extends Component {
-
-    
     
     state = {
         rooms: [],
@@ -22,6 +20,7 @@ class RoomProvider extends Component {
         pets: false,
         token: sessionStorage.getItem('token'),
         userId: null,
+        bookings: []
     }
 
     login = (token, userId, tokenExpiration) => {
@@ -35,7 +34,7 @@ class RoomProvider extends Component {
     };
 
     //get Data
-    getData = async () => {
+    getData = () => {
         const requestBody = {
             query: `
                 query{
@@ -84,24 +83,34 @@ class RoomProvider extends Component {
             })
             .then(resData => {
                 const items = resData.data.events;
-                const rooms = this.formatItem(items);
+                const rooms = this.formatItems(items);
                 let featuredRooms = rooms.filter(room => room.featured === true);
                 let maxPrice = Math.max(...rooms.map(room => room.price));
                 let maxSize = Math.max(...rooms.map(room => room.size));
                 this.setState({rooms, featuredRooms, sortedRooms: rooms, loading: false, maxPrice: maxPrice, price: maxPrice, maxSize});
             })
             .catch(err => {
-                console.log(err);
-
+                console.log("error in data: ",err);
             });
-
     }
+
 
     componentDidMount() {
         this.getData();
     }
 
-    formatItem(items) {
+    formatBookings(bookings){
+        let tempBooking = bookings.map(item=>{
+            const name = item.event.name;
+            const booking =  {...item, event: name };
+
+            return booking;
+        })
+
+        return tempBooking;
+    }
+
+    formatItems(items) {
         let tempItem = items.map(item => {
             let _id = item._id;
             let images = item.images.map(image => image.fields.file.url);
@@ -184,7 +193,8 @@ class RoomProvider extends Component {
                     token: this.state.token,
                     userId: this.state.userId,
                     login: this.login,
-                    logout: this.logout
+                    logout: this.logout,
+                    bookings: this.state.bookings
                 }}
             >
                 {this.props.children}

@@ -9,6 +9,8 @@ import SingleRoom from './pages/SingleRoom';
 import Error from './pages/Error';
 import AuthPage from './pages/Auth';
 import Navbar from './components/Navbar';
+import Bookings from './pages/Bookings';
+
 
 export default class App extends Component {
 
@@ -28,6 +30,9 @@ export default class App extends Component {
           <Route exact path='/' component={Home} />
           <Route exact path='/rooms' component={Rooms} />
           <Route exact path='/rooms/:slug' component={SingleRoom} />
+          {this.context.token && (
+            <Route exact path='/bookings' component={Bookings} />
+          )}
           <Route component={Error} />
           {!this.context.token && <Redirect from="/" to="/auth" exact />}
         </Switch>

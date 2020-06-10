@@ -6,6 +6,8 @@ import {RoomContext} from '../context';
 import StyledHero from '../components/StyledHero';
 import FormBooking from '../components/FormBooking';
 import DaySelection from '../components/DaySelection';
+import {Redirect} from "react-router-dom";
+
 
 
 export default class SingleRoom extends Component {
@@ -53,17 +55,8 @@ export default class SingleRoom extends Component {
                         bookEvent(eventInfo: {_id: "${postId}",startDay:"${this.state.startingDate.toISOString()}",endDay:"${this.state.endingDate.toISOString()}"})
                         {
                         _id
-                        event{
-                            name
-                        }
-                        user{
-                            _id
-                            email
-                        }
                         startDay
                         endDay
-                        createdAt
-                        updatedAt
                         }
                     }
                   `,
@@ -84,12 +77,11 @@ export default class SingleRoom extends Component {
                     return res.json();
                 })
                 .then(resData => {
-                    console.log(resData);
-                    this.setState({isModaled: false});
+                    window.location.reload();
                 })
                 .catch(err => {
-                    this.setState({isModaled: false});
                     console.log(err);
+                    alert("Booking failed!")
                 });
         } else {
             alert("something wrong!");
@@ -119,8 +111,9 @@ export default class SingleRoom extends Component {
             const today = new Date();
             if (booked.endDay > today) {
                 daysInvalid.push(booked.startDay);
-                daysInvalid.push(booked.endDay);
-
+                if(booked.startDay.toDateString() !== booked.endDay.toDateString()){
+                    daysInvalid.push(booked.endDay);
+                }
                 let startDay = new Date(booked.startDay.getTime());
                 startDay.setDate(startDay.getDate() - 1);
 
