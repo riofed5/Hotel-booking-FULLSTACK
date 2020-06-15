@@ -6,9 +6,6 @@ import {RoomContext} from '../context';
 import StyledHero from '../components/StyledHero';
 import FormBooking from '../components/FormBooking';
 import DaySelection from '../components/DaySelection';
-import {Redirect} from "react-router-dom";
-
-
 
 export default class SingleRoom extends Component {
     static contextType = RoomContext;
@@ -43,7 +40,6 @@ export default class SingleRoom extends Component {
     modalConfirmHandler = () => {
         const token = this.context.token;
         const postId = this.context.getRoom(this.state.slug)._id;
-        console.log(postId, `.....token is :  ${token}`);
 
         if (this.state.startingDate
             && this.state.endingDate
@@ -67,11 +63,12 @@ export default class SingleRoom extends Component {
                 body: JSON.stringify(requestBody),
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token
+                    Authorization: 'Bearer ' 
                 }
             })
-                .then(res => {
+                .then((res) => {
                     if (res.status !== 200 && res.status !== 201) {
+                        console.log(res);
                         throw new Error('Failed!');
                     }
                     return res.json();
@@ -79,7 +76,7 @@ export default class SingleRoom extends Component {
                 .then(resData => {
                     window.location.reload();
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log(err);
                     alert("Booking failed!")
                 });
@@ -103,7 +100,7 @@ export default class SingleRoom extends Component {
         }
 
         const {name, description, capacity, price, size, extras, breakfast, pets, images, bookedEvents} = room;
-        const [mainImg, ...defaultImg] = images;
+        const [mainImg] = images;
 
         let daysInvalid = [];
         let disabledDays = [...bookedEvents];

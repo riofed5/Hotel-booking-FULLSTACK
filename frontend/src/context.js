@@ -99,22 +99,11 @@ class RoomProvider extends Component {
         this.getData();
     }
 
-    formatBookings(bookings){
-        let tempBooking = bookings.map(item=>{
-            const name = item.event.name;
-            const booking =  {...item, event: name };
-
-            return booking;
-        })
-
-        return tempBooking;
-    }
-
+    
     formatItems(items) {
         let tempItem = items.map(item => {
             let _id = item._id;
             let images = item.images.map(image => image.fields.file.url);
-            // console.log("Dcm ", new Date(rooms[0].bookedEvents[0].startDay));
             let bookedEvents = item.bookedEvents.map(booking => {
                 const startDay = new Date(booking.startDay);
                 const endDay = new Date(booking.endDay);

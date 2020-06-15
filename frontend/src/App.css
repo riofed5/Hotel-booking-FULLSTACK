@@ -666,3 +666,61 @@ h6 {
   outline: none;
 }
 /* End of Selection Day */
+
+/* SingleBooking */
+
+.bookingslist {
+  padding: 3rem 0;
+
+}
+.bookingslist-center {
+  width: 80vw;
+  margin: 0 auto;
+  /* border: solid 1px black; */
+}
+
+.single-booking{
+  height: 10rem;
+  display: flex;
+  border: solid 1px var(--primaryColor);
+  padding: 1rem 1rem;
+  margin: 20px 0;
+}
+
+.single-booking img{
+  width: 20%;
+  height: 100%;
+}
+
+.single-booking-details{
+  width: 80%;
+  padding: 1%;
+
+}
+
+.single-booking-control{
+}
+
+.single-booking-info p{
+  text-transform: capitalize;
+  margin-left: 5px;
+}
+
+.btn{
+  margin: 5px;
+  display: inline-block;
+  width: 40%;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+  justify-content: space-between
+}
+
+/* End of SingleBooking */
+

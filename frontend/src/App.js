@@ -9,7 +9,7 @@ import SingleRoom from './pages/SingleRoom';
 import Error from './pages/Error';
 import AuthPage from './pages/Auth';
 import Navbar from './components/Navbar';
-import Bookings from './pages/Bookings';
+import Bookings from './pages/YourBookings';
 
 
 export default class App extends Component {

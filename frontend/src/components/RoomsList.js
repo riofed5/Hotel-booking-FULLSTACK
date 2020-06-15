@@ -17,7 +17,6 @@ const RoomsList = ({rooms}) => {
                         <Room key={room._id} room={room} />
                     )
                 })}
-
             </div>
         </section>
     )
