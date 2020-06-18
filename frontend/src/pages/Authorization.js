@@ -12,6 +12,8 @@ class AuthPage extends Component {
     super(props);
     this.emailEl = React.createRef();
     this.passwordEl = React.createRef();
+    this.confPasswordEl = React.createRef();
+
   }
 
   switchModeHandler = () => {
@@ -26,7 +28,12 @@ class AuthPage extends Component {
     const email = this.emailEl.current.value;
     const password = this.passwordEl.current.value;
 
-    if (email.trim().length === 0 || password.trim().length === 0) {
+    if (!this.state.isLogin && this.confPasswordEl.current.value !== password){
+      alert('Confirmed password is NOT valid');
+      return;
+    }
+
+    if (email.trim().length === 0 || password.trim().length < 8) {
       return;
     }
 
@@ -69,7 +76,11 @@ class AuthPage extends Component {
         return res.json();
       })
       .then(resData => {
-        if (resData.data.login.token) {
+        if(!this.state.isLogin){
+          window.location.reload();
+          alert('Register succesfully!');
+        }
+        if (resData.data.login.token ) {
           this.context.login(
             resData.data.login.token,
             resData.data.login.userId,
@@ -78,7 +89,9 @@ class AuthPage extends Component {
         }
       })
       .catch(err => {
-        console.log(err);
+        if (this.state.isLogin){
+          alert(`Account NOT exist!`)
+        }
       });
   };
 
@@ -96,6 +109,12 @@ class AuthPage extends Component {
           <i className="fa fa-lock" aria-hidden="true"></i>
           <input type="password" placeholder="Password" id="password" ref={this.passwordEl} />
         </div>
+        {!this.state.isLogin && (
+          <div className="textbox">
+          <i className="fa fa-check-circle" aria-hidden="true"></i>
+          <input type="password" placeholder="Confirmed password" id="password" ref={this.confPasswordEl} />
+        </div>
+        )}
         <div className="form-actions">
           <button className="submit" type="submit">{this.state.isLogin ? 'Login' : 'Register'}</button>
           <button className="mode" type="button" onClick={this.switchModeHandler}>

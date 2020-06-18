@@ -5,6 +5,7 @@ const {transformBooking, transformEvent, loaders} = require('./merge');
 
 module.exports = {
     bookings: async (args, req) => {
+
         if (!req.isAuth) {
             throw new Error('Unauthenticated!')
         }
@@ -22,7 +23,6 @@ module.exports = {
             throw new Error('Unauthenticated!')
         }
         try {
-            console.log(req.isAuth);
             const fetchedEvent =await Event.findOne({ _id: args.eventInfo._id });
 
             const booking = new Booking({

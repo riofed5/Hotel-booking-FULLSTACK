@@ -568,6 +568,11 @@ h6 {
   margin-bottom: 5px;
 }
 
+.form-actions button:disabled {
+  background: var(--darkGrey);
+  border: solid 2px var(--darkGrey);
+}
+
 .form-actions .mode {
   float: left;
   width: 100%;

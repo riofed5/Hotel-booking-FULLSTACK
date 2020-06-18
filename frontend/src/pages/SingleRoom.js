@@ -44,7 +44,8 @@ export default class SingleRoom extends Component {
         if (this.state.startingDate
             && this.state.endingDate
             && postId && this.nameElRef.current.value !== ''
-            && this.phoneElRef.current.value !== '') {
+            && this.phoneElRef.current.value !== '' 
+            && token) {
             const requestBody = {
                 query: `
                     mutation{
@@ -63,22 +64,30 @@ export default class SingleRoom extends Component {
                 body: JSON.stringify(requestBody),
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' 
+                    Authorization: 'Bearer ' + 'token'
                 }
             })
                 .then((res) => {
-                    if (res.status !== 200 && res.status !== 201) {
-                        console.log(res);
+                    if (res.status === 403){
+                        sessionStorage.removeItem('token');
+                        alert("Login is expired! Please login again");
+                        window.location.replace('/auth')
+                    }
+                    if (res.status !== 200 && res.status !== 201 && res.status !== 403) {
                         throw new Error('Failed!');
                     }
+
                     return res.json();
                 })
                 .then(resData => {
+                    alert("Booking successfully!")
                     window.location.reload();
                 })
                 .catch((err) => {
                     console.log(err);
-                    alert("Booking failed!")
+                    if(err.toString() === 'Error: Failed!'){
+                        alert("Booking failed!")
+                    }
                 });
         } else {
             alert("something wrong!");

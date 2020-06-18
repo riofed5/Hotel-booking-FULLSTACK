@@ -55,6 +55,14 @@ export default class Bookings extends Component {
             }
         })
             .then(res => {
+                if (res.status === 403){
+                    sessionStorage.removeItem('token');
+                    alert("Login is expired! Please login again");
+                    window.location.replace('/auth')
+                }
+                if (res.status !== 200 && res.status !== 201 && res.status !== 403) {
+                    throw new Error('Failed!');
+                }
                 if (res.status !== 200 && res.status !== 201) {
                     throw new Error('Failed!');
                 }

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+const isAuth = (req, res, next) => {
     const authHeader = req.get('Authorization');
     if (!authHeader) {
         req.isAuth = false;
@@ -16,12 +16,13 @@ module.exports = (req, res, next) => {
     let decodedToken;
     try {
         decodedToken = jwt.verify(token, 'somesupersecretkey');
-    }catch(err){
+    } catch (err) {
         req.isAuth = false;
+        res.sendStatus(403);
         return next();
     }
 
-    if (!decodedToken){
+    if (!decodedToken) {
         req.isAuth = false;
         return next();
     }
@@ -29,4 +30,9 @@ module.exports = (req, res, next) => {
     req.isAuth = true;
     req.userId = decodedToken.userId;
     next();
+}
+
+
+module.exports = {
+    isAuth,
 }
