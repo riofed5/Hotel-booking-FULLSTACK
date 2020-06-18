@@ -33,7 +33,7 @@
     "env":{
         "MONGO_USER": "your_user",
         "MONGO_PASSWORD": "your_password",
-        "MONGO_DB": "name_of_db___whatever_you_can_name___"
+        "MONGO_DB": "booking" //Don't change it!
     }
 }
 ```
