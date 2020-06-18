@@ -38,6 +38,7 @@
 }
 ```
 * Launch server : `npm start`
+* If you can NOT connect to server, please check file `server.js` for ``connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@booking-t8fkm.gcp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)`` to be the same as yours in database(link to get yours https://i.ibb.co/5KKx1Pz/Screen-Shot-2020-06-18-at-16-23-08.png)
 * Launch client: 
    * Navigate to `frontend folder`
    * Launch: `npm start`
