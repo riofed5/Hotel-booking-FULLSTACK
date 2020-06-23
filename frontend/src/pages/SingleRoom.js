@@ -65,7 +65,7 @@ export default class SingleRoom extends Component {
                   `,
             };
 
-            fetch('http://localhost:8000/graphql', {
+            fetch('https://reservation-resort.herokuapp.com/graphql', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
