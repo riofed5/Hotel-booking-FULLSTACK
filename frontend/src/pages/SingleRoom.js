@@ -70,7 +70,7 @@ export default class SingleRoom extends Component {
                 body: JSON.stringify(requestBody),
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + 'token'
+                    Authorization: 'Bearer ' + token
                 }
             })
                 .then((res) => {

@@ -19,7 +19,7 @@ export default class Bookings extends Component {
             return booking;
         })
 
-        return tempBooking;
+        return tempBooking.reverse();
     }
 
     getBookings = () => {

@@ -1,5 +1,8 @@
 # Resort Booking
 
+### Official version
+* Visit via browser: https://reservation-resort.netlify.app/
+
 ## Requirement list before run this application:
 * Node server
 * MongoDB via (https://www.mongodb.com/cloud/atlas)
@@ -22,6 +25,7 @@
 * NodeJS
 * MongoDB Cloud
 * GraphQL
+* Heroku server
 
 ### Run the app
 * Clone the respo: `git clone https://github.com/riofed5/Hotel-booking.git`
@@ -42,3 +46,4 @@
 * Launch client: 
    * Navigate to `frontend folder`
    * Launch: `npm start`
+
