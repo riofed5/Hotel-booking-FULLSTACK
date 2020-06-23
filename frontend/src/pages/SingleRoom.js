@@ -29,6 +29,13 @@ export default class SingleRoom extends Component {
         this.setState({isModaled: false});
     };
 
+    validationFormBooking= (name, phoneNumber) =>{
+        if(name !== '' && phoneNumber !== '' && phoneNumber.length > 6){
+            return true;
+        }
+        return false;
+    }
+
     handleDaySelection = (dayStart, dayEnd) => {
         this.setState({startingDate: dayStart, endingDate: dayEnd});
     }
@@ -39,12 +46,11 @@ export default class SingleRoom extends Component {
 
     modalConfirmHandler = () => {
         const token = this.context.token;
-        const postId = this.context.getRoom(this.state.slug)._id;
+        const postId = this.context.getRoom(this.state.slug)._id; 
 
         if (this.state.startingDate
             && this.state.endingDate
-            && postId && this.nameElRef.current.value !== ''
-            && this.phoneElRef.current.value !== '' 
+            && postId && this.validationFormBooking(this.nameElRef.current.value, this.phoneElRef.current.value)
             && token) {
             const requestBody = {
                 query: `
@@ -90,7 +96,7 @@ export default class SingleRoom extends Component {
                     }
                 });
         } else {
-            alert("something wrong!");
+            alert("Unfortunately, form is incorrect!");
         }
     }
 
@@ -208,7 +214,7 @@ export default class SingleRoom extends Component {
                             </div>
                             <div className="bookingform-control">
                                 <label htmlFor="phone">Phone Number</label>
-                                <input type="text" placeholder="(+358) 123456789" id="phone" ref={this.phoneElRef} />
+                                <input type="number" placeholder="(+358) 123456789" id="phone" ref={this.phoneElRef} />
                             </div>
                             <div className="bookingform-control">
                                 <label htmlFor="date">Date Of Booking</label>
