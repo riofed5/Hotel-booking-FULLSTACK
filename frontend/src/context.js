@@ -20,8 +20,13 @@ class RoomProvider extends Component {
         pets: false,
         token: sessionStorage.getItem('token'),
         userId: null,
-        bookings: []
+        bookings: [],
+        isNavBarOpen: false,
     }
+
+    handleToggleNavBar = () => {
+        this.setState({ isNavBarOpen: !this.state.isNavBarOpen });
+      };
 
     login = (token, userId, tokenExpiration) => {
         sessionStorage.setItem('token', token);
@@ -178,6 +183,7 @@ class RoomProvider extends Component {
                 value={{
                     ...this.state,
                     getRoom: this.getRoom,
+                    handleToggleNavBar: this.handleToggleNavBar,
                     handleChange: this.handleChange,
                     token: this.state.token,
                     userId: this.state.userId,

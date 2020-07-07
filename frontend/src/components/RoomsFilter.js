@@ -1,17 +1,13 @@
 import React from 'react'
-import {useContext} from 'react';
-import {RoomContext} from '../context';
 import Title from '../components/Title';
 
 const getUnique = (items, value) => {
     return [...new Set(items.map(item => item[value]))]
 }
 
-const RoomsFilter = ({rooms}) => {
-    const context = useContext(RoomContext);
+const RoomsFilter = ({rooms, context}) => {
     const {handleChange, type, price, minPrice, maxPrice, breakfast, pets, capacity, minSize, maxSize} = context;
     let types = ['all', ...getUnique(rooms, 'type')];
-    // console.log(types);
     types = types.map((type, index) =>
         (
             <option value={type} key={index}>{type}</option>
@@ -27,7 +23,7 @@ const RoomsFilter = ({rooms}) => {
 
     return (
         <div className="filter-container">
-            <Title title=" search rooms" />
+            <Title title="search rooms" />
             <form className=" filter-form">
                 {/* Select type */}
                 <div className=" form-group">

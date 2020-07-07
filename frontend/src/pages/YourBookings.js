@@ -109,7 +109,6 @@ export default class Bookings extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
                 window.location.reload();
             })
             .catch(err => {

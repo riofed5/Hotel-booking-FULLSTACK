@@ -1,19 +1,12 @@
 import React, {useState} from 'react'
-import logo from '../images/logo.svg';
+import logo from '..//images/logo.svg';
 import {FaAlignRight} from 'react-icons/fa';
 import {Link, NavLink} from 'react-router-dom';
 import {withRoomConsumer} from '../context';
 
 const Navbar = ({context}) => {
 
-    const {token, logout} = context;
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleToggle = () => {
-        setIsOpen(!isOpen);
-    }
-
+    const {token, logout, isNavBarOpen, handleToggleNavBar } = context;
     return (
         <>
         <nav className="navbar">
@@ -24,11 +17,12 @@ const Navbar = ({context}) => {
                     </NavLink>
                     <button type="button"
                         className="nav-btn"
-                        onClick={handleToggle}>
+                        onClick={handleToggleNavBar}
+                        >
                         <FaAlignRight className="nav-icon" />
                     </button>
                 </div>
-                <ul className={isOpen ? "nav-links show-nav" : "nav-links"}>
+                <ul className={isNavBarOpen ? "nav-links show-nav" : "nav-links"}>
                     <li>
                         <NavLink exact to="/">Home</NavLink>
                     </li>
