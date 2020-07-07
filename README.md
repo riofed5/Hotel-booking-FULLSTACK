@@ -1,7 +1,7 @@
 # Resort Booking
 
 ### Official version
-* Visit via browser: resort-reservation.netlify.app
+* Visit via browser: https://resort-reservation.netlify.app/
 
 ## Requirement list before run this application:
 * Node server
