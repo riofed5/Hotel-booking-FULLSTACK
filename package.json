@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.17.0",
+    "npm": "8.15.0"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +24,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
     "nodemailer": "^6.7.8",
-    "nodemailer-smtp-transport": "^2.7.4"
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemon": "^2.0.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

@@ -43,7 +43,7 @@ mongoose
   .then(() => {
     console.log("Connected DB!");
     // Start Express server
-    app.listen(8000, () => {
+    app.listen(process.env.PORT || 8000, () => {
       console.log("============================");
       console.log("||| Server is connected! |||");
       console.log("============================");
