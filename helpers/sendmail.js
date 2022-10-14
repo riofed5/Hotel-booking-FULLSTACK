@@ -23,7 +23,7 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
     html: `<h1>Email Confirmation</h1>
       <h2>Hello ${name}</h2>
       <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-      <a href=http://localhost:8080/confirm?q=${confirmationCode}> Click here</a>
+      <a href=https://resort-booking-v1.netlify.app/confirm?q=${confirmationCode}> Click here</a>
       </div>`,
   };
 
