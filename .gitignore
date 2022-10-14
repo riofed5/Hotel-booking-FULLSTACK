@@ -4,3 +4,6 @@ node_modules/
 nodemon.json
 package-lock.json
 Contenful.js
+
+/dist
+.env

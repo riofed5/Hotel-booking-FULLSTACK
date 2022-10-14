@@ -38,3 +38,8 @@
   - Backend:
     - change directory to frontend: `cd backend`
     - run the application: `npm run start`
+
+### Account for testing:
+
+- username: `test@gmail.com`
+- password: `thieulamtu`
